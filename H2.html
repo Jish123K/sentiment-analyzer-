@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Product Review Sentiment Analysis</title>
+
+</head>
+
+<body>
+
+    <h1>Product Review Sentiment Analysis</h1>
+
+    <p>This web application allows you to view the overall sentiment of product reviews, the aspects of the product that customers are happy or unhappy about, and the most common happy and unhappy aspects.</p>
+
+    <h2>Overall Sentiment</h2>
+
+    <p>{{ overall_sentiment }}</p>
+
+    <h2>Happy Aspects</h2>
+
+    <ul>
+
+        {% for happy_aspect in happy_aspects %}
+
+            <li>{{ happy_aspect }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+    <h2>Unhappy Aspects</h2>
+
+    <ul>
+
+        {% for unhappy_aspect in unhappy_aspects %}
+
+            <li>{{ unhappy_aspect }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+    <h2>Most Common Happy Aspects</h2>
+
+    <ul>
+
+        {% for happy_aspect, count in most_common_happy_aspects %}
+
+            <li>{{ happy_aspect }} ({{ count }})</li>
+
+        {% endfor %}
+
+    </ul>
+
+    <h2>Most Common Unhappy Aspects</h2>
+
+    <ul>
+
+        {% for unhappy_aspect, count in most_common_unhappy_aspects %}
+
+            <li>{{ unhappy_aspect }} ({{ count }})</li>
+
+        {% endfor %}
+
+    </ul>
+
+</body>
+
+</html>
