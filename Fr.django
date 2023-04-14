@@ -1,0 +1,87 @@
+from django.db import models
+
+from django.contrib import admin
+
+# Create a model for product reviews
+
+class ProductReview(models.Model):
+
+    review_text = models.TextField()
+
+    sentiment = models.CharField(max_length=10)
+
+    aspects = models.TextField()
+
+# Register the model with the admin
+
+admin.site.register(ProductReview)
+
+# Create a web application
+
+from django.shortcuts import render
+
+from django.http import HttpResponse
+
+def index(request):
+
+    # Get the product reviews
+
+    reviews = ProductReview.objects.all()
+
+    # Calculate the overall sentiment of the reviews
+
+    overall_sentiment = reviews.count("positive") / len(reviews)
+
+    # Extract the aspects of the product that customers are happy or unhappy about
+
+    happy_aspects = []
+
+    unhappy_aspects = []
+
+    for review in reviews:
+
+        if review.sentiment == "positive":
+
+            happy_aspects.append(review.aspects)
+
+        else:
+
+            unhappy_aspects.append(review.aspects)
+
+    # Get the most common happy and unhappy aspects
+
+    most_common_happy_aspects = Counter(happy_aspects).most_common(10)
+
+    most_common_unhappy_aspects = Counter(unhappy_aspects).most_common(10)
+
+    # Render the HTML template
+
+    return render(request, "index.html",
+
+                    {
+
+                        "overall_sentiment": overall_sentiment,
+
+                        "happy_aspects": happy_aspects,
+
+                        "unhappy_aspects": unhappy_aspects,
+
+                        "most_common_happy_aspects": most_common_happy_aspects,
+
+                        "most_common_unhappy_aspects": most_common_unhappy_aspects,
+
+                    })
+                    if __name__ == "__main__":
+
+    # Run the development server
+
+    port = 8000
+
+    host = "localhost"
+
+    
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(["python", "manage.py", "runserver", f"{host}:{port}"])
+                    
